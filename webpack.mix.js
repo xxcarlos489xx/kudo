@@ -1,4 +1,5 @@
-const mix = require('laravel-mix');
+const {MIX_PACKAGE, NPM, VENDOR, OUTPUT, output} = require('laravel-multimix');
+
 
 /*
  |--------------------------------------------------------------------------
@@ -11,5 +12,6 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+ let folder = MIX_PACKAGE
+ const modulosPath = `${__dirname}/modulos/`;
+ require(`${modulosPath}/${folder}/webpack.mix.js`);
