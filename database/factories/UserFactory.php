@@ -2,8 +2,9 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\User;
+use App\Models\User;
 use Faker\Generator as Faker;
+use Faker\Provider\Uuid;
 use Illuminate\Support\Str;
 
 /*
@@ -18,11 +19,15 @@ use Illuminate\Support\Str;
 */
 
 $factory->define(User::class, function (Faker $faker) {
+    $names = $faker->name();
+
     return [
-        'name' => $faker->name,
+        'nombres' => $names,
+        'estado' => 1,
         'email' => $faker->unique()->safeEmail,
+        'fecha_nacimiento'=> $faker->date($format = 'Y-m-d', $max = '1999-12-31'),
         'email_verified_at' => now(),
         'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-        'remember_token' => Str::random(10),
+        'remember_token' => Str::random(10)
     ];
 });

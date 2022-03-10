@@ -1,0 +1,10 @@
+html, body {
+    background-color: rgb(151, 139, 139)!important;
+    font-family: 'Nunito', sans-serif!important;
+    height: 100vh;
+    margin: 0;
+}
+ 
+#app {
+    margin-top: -100px;
+}

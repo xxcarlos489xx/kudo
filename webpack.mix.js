@@ -13,5 +13,5 @@ const {MIX_PACKAGE, NPM, VENDOR, OUTPUT, output} = require('laravel-multimix');
  */
 
  let folder = MIX_PACKAGE
- const modulosPath = `${__dirname}/modulos/`;
+ const modulosPath = `${__dirname}/modules/`;
  require(`${modulosPath}/${folder}/webpack.mix.js`);
