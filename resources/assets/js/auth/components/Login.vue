@@ -112,6 +112,7 @@ export default {
                 this.$AuthApi.login(form)
                     .then((rs)=>{
                         if (rs.status === 200) {
+                            window.location = '/dashboard';
                             this.loading=false;
                         }
                     }).catch(({response})=>{

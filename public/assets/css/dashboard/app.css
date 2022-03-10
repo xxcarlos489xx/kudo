@@ -1,0 +1,29 @@
+html, body {
+    font-family: 'Nunito', sans-serif!important;
+    height: 100vh;
+    margin: 0;
+}
+.container-fluid{
+    background-color:#e6ebf0;
+}
+.row-head-kudo{
+    background-color:#212529;
+}
+.card{
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.btn-options{
+    position: absolute!important;
+    right: 10px;
+    top: 15px;
+    font-size: 30px;
+    cursor: pointer;
+}
+.btn-view-kudo{
+    position: absolute!important;
+    right: 85px;
+    top: 15px;
+}
+.dropdown-toggle::after{
+    display: none !important;
+}

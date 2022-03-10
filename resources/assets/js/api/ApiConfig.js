@@ -4,6 +4,6 @@ const baseUrl = '/';
 export default axios.create({
     baseUrl,
     headers: {
-        // 'X-Requested-With' : 'XMLHttpRequest'
+        'X-Requested-With' : 'XMLHttpRequest'
     }
 })
