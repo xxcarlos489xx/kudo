@@ -9,7 +9,16 @@ export default {
     eliminar(id){
         return ApiConfig.post(`${resource}/eliminar/${id}`);
     },
+    enviar(id){
+        return ApiConfig.post(`${resource}/enviar/${id}`);
+    },
+    getTablero(id){
+        return ApiConfig.post(`${resource}/getTablero/${id}`);
+    },
     saveTablero(payload){
         return ApiConfig.post(`${resource}/saveTablero`,payload);
+    },
+    saveKudo(payload){
+        return ApiConfig.post(`${resource}/saveKudo`,payload);
     }
 }

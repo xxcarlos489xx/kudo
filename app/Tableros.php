@@ -32,7 +32,7 @@ class Tableros extends Model
     }
 
     public function kudos(){
-        return $this->hasMany(Kudos::class,'id','tablero_id');
+        return $this->hasMany(Kudos::class,'tablero_id');
     }
 
     public function rules(){

@@ -32,7 +32,7 @@
                         </b-col>
                         <template v-if="!loading && tableros.length > 0">
                             <template v-for="t in tableros">
-                                <Kudo :all="all" :item="t" :key="t.id"></Kudo>
+                                <Kudo :auth="auth" :all="all" :item="t" :key="t.id"></Kudo>
                             </template>
                         </template>
                         <template v-if="!loading && tableros.length === 0">
@@ -62,7 +62,7 @@
                         </b-col>
                         <template v-if="!loading && tableros.length > 0">
                             <template v-for="t in tableros">
-                                <Kudo :all="all" :item="t" :key="t.id"></Kudo>
+                                <Kudo :auth="auth" :all="all" :item="t" :key="t.id"></Kudo>
                             </template>
                         </template>
                         <template v-if="!loading && tableros.length === 0">
@@ -195,6 +195,9 @@ export default {
         this.eventHub.$on('eliminar',(id)=>{
             this.eliminar(id);
         }),
+        this.eventHub.$on('enviar',(id)=>{
+            this.enviar(id);
+        }),
         this.$root.$on('bv::modal::hidden', (bvEvent, modalId) => {
             this.cleanModal()
         }),
@@ -261,7 +264,8 @@ export default {
                     const {status,data} = rs;
                     if (status === 200) {
                         this.loading=false;
-                        this.tableros=[...data.tableros]
+                        this.tableros=[...data.tableros];
+                        console.log(this.tableros);
                     }
                 }).catch(({response})=>{
                     this.loading = false;
@@ -270,6 +274,21 @@ export default {
         eliminar(id){
             this.$DashboardApi
                 .eliminar(id)
+                .then((rs)=>{
+                    if (rs.status === 200) {
+                        this.loadTableros(this.all);
+                        this.makeToast(rs.data.message,'success');
+                    }
+                })
+                .catch(({response})=>{
+                    if (response.status === 401) {
+                        this.makeToast(response.data.message,'error');
+                    }
+                })
+        },
+        enviar(id){
+            this.$DashboardApi
+                .enviar(id)
                 .then((rs)=>{
                     if (rs.status === 200) {
                         this.loadTableros(this.all);

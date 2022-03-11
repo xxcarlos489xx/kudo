@@ -1,6 +1,8 @@
 <template>
   <b-navbar toggleable="lg" type="dark" variant="dark">
-    <b-navbar-brand href="#">DASHBOARD</b-navbar-brand>
+    <b-navbar-brand >
+      <router-link :to="'/dashboard'">DASHBOARD</router-link>
+    </b-navbar-brand>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -26,3 +28,8 @@ export default {
   },
 };
 </script>
+<style scoped>
+  a{
+    text-decoration: none;
+  }
+</style>

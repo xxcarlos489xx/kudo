@@ -17,7 +17,11 @@ Route::get('/','Dashboard\DashboardController@index');
 Route::get('/dashboard/{vue_capture?}', 'Dashboard\DashboardController@index')->where('vue_capture', '^(?!storage).*$')->name('dashboard');
 Route::post('/dashboard/getTableros', 'Dashboard\DashboardController@getTableros');
 Route::post('/dashboard/eliminar/{id}', 'Dashboard\DashboardController@eliminar');
+Route::post('/dashboard/enviar/{id}', 'Dashboard\DashboardController@enviar');
+Route::post('/dashboard/getTablero/{id}', 'Dashboard\DashboardController@getTablero');
 Route::post('/dashboard/saveTablero', 'Dashboard\DashboardController@saveTablero');
+Route::post('/dashboard/saveKudo', 'Dashboard\DashboardController@saveKudo');
+
 
 //RUTAS DE LOGIN
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');

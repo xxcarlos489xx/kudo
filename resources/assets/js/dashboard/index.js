@@ -28,6 +28,11 @@ import Toast from "vue-toastification";
 import "vue-toastification/dist/index.css";
 Vue.use(Toast);
 
+//import VueCropper
+import VueCropper from 'vue-cropperjs';
+import 'cropperjs/dist/cropper.css';
+Vue.component('VueCropper',VueCropper);
+
 const eventHub = new Vue();
 Vue.mixin({
     data: function() {
