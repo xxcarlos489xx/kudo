@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Dashboard;
 
+use App\Events\TableroCreatedEvent;
 use App\Http\Controllers\Controller;
 use App\Reglas;
 use App\Tableros;
@@ -121,6 +122,7 @@ class DashboardController extends Controller{
                                         "usuario_id"        => $user->id,
                                         "usuario_send_id"   => $data['usuario'],
                                     ]);
+        event(new TableroCreatedEvent($user));
         if ($reglas) {
             $tablero->rules()->sync($reglas);
         }

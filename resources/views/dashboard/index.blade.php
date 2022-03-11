@@ -5,7 +5,7 @@
 @section('content')
     <div id="app">
         <nav-bar :user="{{$auth}}"></nav-bar>
-        <router-view :users="{{$users}}" :reglas="{{$reglas}}"></router-view>
+        <router-view :auth="{{$auth}}" :users="{{$users}}" :reglas="{{$reglas}}"></router-view>
         <footer-dash></footer-dash>
     </div>
     @push('scripts')

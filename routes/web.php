@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/','Dashboard\DashboardController@index');
 
 Route::get('/dashboard/{vue_capture?}', 'Dashboard\DashboardController@index')->where('vue_capture', '^(?!storage).*$')->name('dashboard');
 Route::post('/dashboard/getTableros', 'Dashboard\DashboardController@getTableros');

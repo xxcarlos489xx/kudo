@@ -161,7 +161,7 @@ import {
     maxLength,
 } from 'vuelidate/lib/validators';
 export default {
-    props:["users","reglas"],
+    props:["users","reglas","auth"],
     data () {
         return {
             saving:false,
@@ -197,12 +197,23 @@ export default {
         }),
         this.$root.$on('bv::modal::hidden', (bvEvent, modalId) => {
             this.cleanModal()
-        })
+        }),
+        window.Echo
+                .channel(`challenge-kudo-created`)
+                .listen('TableroCreatedEvent',(payload)=>{
+                    this.dispatchEvent(payload);
+                })
     },
-    components:{
+        components:{
         Kudo
     },
     methods: {
+        dispatchEvent(payload){
+            if (payload.id != this.auth.id) {
+                this.makeToast(`El usuario ${payload.name} ha creado un nuevo tablero`,'info');    
+                this.loadTableros(this.all);
+            }
+        },
         cleanModal(){
             this.form.user = '';
             this.form.title = '';
@@ -247,7 +258,6 @@ export default {
             v ? form.append('all',v) : '';
             this.$DashboardApi.getTableros(form)
                 .then((rs)=>{
-                    console.log(rs);
                     const {status,data} = rs;
                     if (status === 200) {
                         this.loading=false;

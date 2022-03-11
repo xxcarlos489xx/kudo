@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import NavBar from '../partials/NavBar'
 import Footer from '../partials/Footer'
-
+require('../echo');
 
 Vue.use(BootstrapVue);
 Vue.use(BootstrapVueIcons);
