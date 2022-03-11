@@ -212,7 +212,7 @@ export default {
     },
     methods: {
         dispatchEvent(payload){
-            if (payload.id != this.auth.id) {
+            if (payload.autor_id != this.auth.id && payload.user_send_id != this.auth.id) {
                 this.makeToast(`El usuario ${payload.name} ha creado un nuevo tablero`,'info');    
                 this.loadTableros(this.all);
             }
@@ -265,7 +265,6 @@ export default {
                     if (status === 200) {
                         this.loading=false;
                         this.tableros=[...data.tableros];
-                        console.log(this.tableros);
                     }
                 }).catch(({response})=>{
                     this.loading = false;

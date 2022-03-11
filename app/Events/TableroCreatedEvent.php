@@ -17,17 +17,18 @@ class TableroCreatedEvent implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $name;
-    public $id;
-    public $tablero_id;
+    public $autor_id;
+    public $user_send_id;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(User $user)
+    public function __construct(User $user,Tableros $tablero)
     {
         $this->name = $user->nombres;
-        $this->id = $user->id;
+        $this->autor_id = $user->id;
+        $this->user_send_id = $tablero->usuario_send_id;
     }
 
     /**

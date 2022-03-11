@@ -173,7 +173,6 @@ export default {
                     .then((rs)=>{
                         if (rs.status === 200) {
                             this.loading = false;
-                            console.log(rs);
                             this.tablero = {...rs.data.tablero}
                         }
                     })

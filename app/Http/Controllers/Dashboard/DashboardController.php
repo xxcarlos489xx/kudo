@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class DashboardController extends Controller{
     
@@ -182,7 +183,7 @@ class DashboardController extends Controller{
                                         "usuario_id"        => $user->id,
                                         "usuario_send_id"   => $data['usuario'],
                                     ]);
-        event(new TableroCreatedEvent($user));
+        event(new TableroCreatedEvent($user,$tablero));
         if ($reglas) {
             $tablero->rules()->sync($reglas);
         }
@@ -204,11 +205,14 @@ class DashboardController extends Controller{
 
             if (in_array('HB',$reglas)) {
 
-                $date_nac = $tablero->user_send->fecha_nacimiento;
-                $date_now = date('Y-m-d');
-
+                $date_nac = strtotime($tablero->user_send->fecha_nacimiento);
+                $date_nac = date('m-d',$date_nac);
+                $date_now = date('m-d');
+                
                 if ($date_nac > $date_now) {
-                    return response()->json(["message"=>'Este tablero solo puede ser enviado el día de la fecha de cumpleaños'],401);
+                    $dt = Carbon::createFromDate(($tablero->user_send->fecha_nacimiento));
+                    $fecha_format = $dt->day." de ".ucfirst($dt->localeMonth);
+                    return response()->json(["message"=>'Este tablero solo puede ser enviado el día de cumpleaños '.$fecha_format],401);
                 }
             }
             
