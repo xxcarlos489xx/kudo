@@ -24,6 +24,16 @@ html, body {
     right: 85px;
     top: 15px;
 }
-.dropdown-toggle::after{
-    display: none !important;
+.main-footer {
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    right: 0;
+    z-index: 1032;
+}
+.main-footer {
+    background-color: #fff;
+    border-top: 1px solid #dee2e6;
+    color: #869099;
+    padding: 1rem;
 }

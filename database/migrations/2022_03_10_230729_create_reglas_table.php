@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 
-class CreateUsersTable extends Migration
+class CreateReglasTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,19 +14,16 @@ class CreateUsersTable extends Migration
      */
     public function up()
     {
-        Schema::create('usuarios', function (Blueprint $table) {
+        Schema::create('reglas', function (Blueprint $table) {
             $table->uuid('id')->primary('id');
-            $table->string('nombres');
-            $table->string('email')->unique();
-            $table->tinyInteger('estado');
-            $table->string('password');
-            $table->date('fecha_nacimiento');
-            $table->date('email_verified_at')->nullable();
-            $table->rememberToken();
+            $table->string('name');
+            $table->string('cod')->unique();
+            $table->text('descripcion');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->default(DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'));
         });
-        factory('App\User',30)->create();
+        factory('App\Reglas')->create();
+
     }
 
     /**
@@ -36,6 +33,6 @@ class CreateUsersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('usuarios');
+        Schema::dropIfExists('reglas');
     }
 }

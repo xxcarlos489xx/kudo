@@ -1,35 +1,39 @@
 <template>
-    <b-card no-body class="overflow-hidden mb-3">
+    <b-card no-body class="overflow-hidden mb-3" v-if="item">
         <b-row no-gutters>
-            <b-col md="3">
-                <b-card-img src="https://picsum.photos/300/300/?image=20" alt="Image" class="rounded-0"></b-card-img>
+            <b-col md="6" lg="3" class="d-flex">
+                <b-card-img :src="item.img ? item.img : '/kudo-default.png'" alt="Image" class="rounded-0"></b-card-img>
             </b-col>
-            <b-col md="9" class="align-self-center">
-                <b-card-body title="Titulo tablero">
+            <b-col md="6" lg="9" class="align-self-center p-3">
+                <b-card-body :title="item.titulo">
                     <a class="btn btn-primary btn-view-kudo" href="#" role="button">Ver tablero</a>
-                    <b-dropdown class="btn-options" size="lg"  dropleft variant="link" toggle-class="text-decoration-none" no-caret>
+                    <b-dropdown class="btn-options" 
+                                size="lg"  
+                                dropleft 
+                                variant="link" 
+                                v-if="all"
+                                toggle-class="text-decoration-none" 
+                                no-caret>
                         <template #button-content>
                             <b-icon class="icon-options" icon="three-dots-vertical"></b-icon>
                         </template>
-                        <b-dropdown-item href="#">Eliminar</b-dropdown-item>
+                        <b-dropdown-item @click="eliminar(item.id)">Eliminar</b-dropdown-item>
                     </b-dropdown>
-                    <span>
-                        <strong>PARA:</strong>NOMBRE
+                    <span v-if="all">
+                        <strong>PARA: </strong>{{item.user_send.nombres}}
                     </span>
                     <hr>
                     <b-card-text>
                         <div class="row">
                         <div class="col-6">
-                            <label for="">Autor</label><br>
-                            <small>Nombres</small><br>
-                            <label for="">Posts</label><br>
-                            <small>8</small>
+                            <small><strong>Autor</strong></small><br>
+                            <small>{{item.autor.nombres}}</small><br>
+                            <small><strong>Posts</strong></small><br>
+                            <small>{{item.kudos}}</small>
                         </div>
                         <div class="col-6">
-                            <label for="">Autor</label><br>
-                            <small>Nombres</small><br>
-                            <label for="">Posts</label><br>
-                            <small>8</small>
+                            <small><strong>Creado</strong></small><br>
+                            <small>{{item.created_at}}</small>
                         </div>
                         </div>
                     </b-card-text>
@@ -40,11 +44,18 @@
 </template>
 
 <script>
-export default {
-    data () {
-        
 
-        return {}
-    }
+export default {
+    props:['item','all'],
+    data () {
+        return {
+
+        }
+    },
+    methods: {
+        eliminar(id){
+            this.eventHub.$emit('eliminar', id);
+        }
+    },
 }
 </script>

@@ -4,10 +4,9 @@
 
 @section('content')
     <div id="app">
-        <nav-bar></nav-bar>
-        {{-- <div class="container"> --}}
-            <router-view></router-view>
-        {{-- </div> --}}
+        <nav-bar :user="{{$auth}}"></nav-bar>
+        <router-view :users="{{$users}}" :reglas="{{$reglas}}"></router-view>
+        <footer-dash></footer-dash>
     </div>
     @push('scripts')
         <script src="{{ asset('assets/js/dashboard/index.js')}}"></script>

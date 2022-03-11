@@ -14,7 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/dashboard/{vue_capture?}', 'Dashboard\DashboardController@index')->where('vue_capture', '^(?!storage).*$')->name('dashboard');
-
+Route::post('/dashboard/getTableros', 'Dashboard\DashboardController@getTableros');
+Route::post('/dashboard/eliminar/{id}', 'Dashboard\DashboardController@eliminar');
+Route::post('/dashboard/saveTablero', 'Dashboard\DashboardController@saveTablero');
 
 //RUTAS DE LOGIN
 Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
