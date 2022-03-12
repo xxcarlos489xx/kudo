@@ -34,21 +34,21 @@ test@kudo.pe | password
 
 ## Compiled modules frontend
 
-# Folder Modules
+### Folder Modules
 - app/modules
-# Dev
+### Dev
 
 `$ npm run mix dev nameModuleFolder`
 
-# Watch
+### Watch
 
 `$ npm run mix watch nameModuleFolder`
 
-# Prod
+### Prod
 
 `$ npm run mix production nameModuleFolder`
 
 
-### Testing
+## Testing
 
 `$ php artisan test`
