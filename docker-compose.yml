@@ -3,66 +3,52 @@ services:
 
   #PHP Service
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    image: php:7.2-fpm
-    container_name: app
-    restart: unless-stopped
-    tty: true
-    environment:
-      SERVICE_NAME: app
-      SERVICE_TAGS: dev
-    working_dir: /var/www
+    image: sk2022-img
+    container_name: sk2022-container
+    build: ./
+    restart: always
+    ports:
+        - "81:80"
     volumes:
-      - ./:/var/www
-      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
-    networks:
-      - app-network
+      - .:/var/www/html
 
   #Nginx Service
-  webserver:
-    image: nginx:alpine
-    container_name: webserver
-    restart: unless-stopped
-    tty: true
-    environment:
-    - VIRTUAL_PORT=80
-    - VIRTUAL_HOST=project.local
+  myadmin:
+    image: phpmyadmin
+    container_name: phpmyadmin
+    restart: always
+    depends_on:
+        - mysql
     ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./:/var/www
-      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
-    networks:
-      - app-network
+      - "82:80"
+    links:
+      - mysql:db
 
   #MySQL Service
-  db:
+  mysql:
     image: mysql:5.7.22
-    container_name: db
-    restart: unless-stopped
+    container_name: mysql
+    restart: always
     tty: true
     ports:
       - "3306:3306"
     environment:
+      MYSQL_HOST: 0.0.0.0
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: db_kudo
       MYSQL_USER: root
-      MYSQL_PASSWORD: root
+      MYSQL_PASSWORD: 2083
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     volumes:
       - dbdata:/var/lib/mysql/
-      - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
-    networks:
-      - app-network
+      # - ./docker/mysql/my.cnf:/etc/mysql/my.cnf
+
 
 #Docker Networks
-networks:
-  app-network:
-    driver: bridge
+# networks:
+#   app-network:
+#     driver: bridge
 #Volumes
 volumes:
   dbdata:

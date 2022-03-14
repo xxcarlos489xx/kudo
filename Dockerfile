@@ -1,49 +1,33 @@
-FROM php:7.2-fpm
+FROM php:7.4-apache
 
-# Copy composer.lock and composer.json
-COPY composer.lock composer.json /var/www/
+RUN a2enmod rewrite
 
-# Set working directory
-WORKDIR /var/www
-
-# Install dependencies
 RUN apt-get update && apt-get install -y \
-    build-essential \
-#    mysql-client \
-    locales \
-    git \
-    unzip \
-    zip \
-    curl
+        zlib1g-dev \
+        libicu-dev \
+        libxml2-dev \
+        libpq-dev \
+        vim \
+        libzip-dev \
+        && docker-php-ext-install pdo pdo_mysql zip intl xmlrpc soap opcache \
+        && docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd 
 
-# Clear cache
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Install extensions
-RUN docker-php-ext-install pdo_mysql mbstring  exif pcntl
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -- \
+	&& apt-get install -y nodejs \
+	&& apt-get autoremove -y
 
-# Install composer
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+COPY docker/php/php.ini /usr/local/etc/php
+COPY  docker/apache/vhost.conf /etc/apache2/sites-available/000-default.conf
+COPY  docker/apache/apache2.conf /etc/apache2/apache2.conf
+COPY  docker/.env /var/www/html/.env
 
-# Install Node
-RUN apt-get update &&\
-    curl -fsSL https://deb.nodesource.com/setup_14.x | -E bash - &&\
-    apt-get install -y nodejs &&\
-    npm config set registry https://registry.npm.taobao.org --global
 
-# Add user for laravel application
-RUN groupadd -g 1000 www
-RUN useradd -u 1000 -ms /bin/bash -g www www
+ENV COMPOSER_ALLOW_SUPERUSER 1
 
-# Copy existing application directory contents
-COPY . /var/www
+# COPY  . /var/www/html/
+# WORKDIR /var/www/html/
 
-# Copy existing application directory permissions
-COPY --chown=www:www . /var/www
-
-# Change current user to www
-USER www
-
-# Expose port 8000 and start php-fpm server
-EXPOSE 8000
-CMD ["php-fpm"]
+# RUN chown -R www-data:www-data /var/www/html  \
+#     && composer install  && composer dumpautoload 
